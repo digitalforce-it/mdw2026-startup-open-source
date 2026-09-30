@@ -5,6 +5,24 @@ Milano Digital Week 2026 · Le Village by CA Milano · 1 ottobre 2026 · Digital
 
 Questo repository contiene tutto quello che abbiamo usato nella sessione: il codice, i dati dimostrativi, le istruzioni e i prompt. È pubblico perché l'idea della sessione è proprio questa: con un gestionale open source, un'intelligenza artificiale e un problema descritto bene, il software che serve si può costruire da soli.
 
+## Demo online
+
+Le pagine pubbliche di Pausa, la startup di fantasia della sessione, sono online **fino al 31 ottobre 2026**:
+
+- **Profilo social:** [mdw.digitalforce.it/pausa/social](https://mdw.digitalforce.it/pausa/social)
+- **Landing page:** [mdw.digitalforce.it/pausa](https://mdw.digitalforce.it/pausa)
+
+Il modulo di contatto crea davvero un lead nel CRM dimostrativo: provatelo, ma non inserite dati reali.
+
+Il gestionale vero e proprio (fatture, pipeline, lead, cassa) non è accessibile pubblicamente. Ecco come appare:
+
+| | |
+|---|---|
+| ![Lead in arrivo](docs/screenshot/lead-in-arrivo.png) **Lead in arrivo**, con la fonte di ciascuno | ![Preventivi a rischio](docs/screenshot/preventivi-a-rischio.png) **Preventivi a rischio**, con le richiamate in ritardo |
+| ![Previsione di cassa](docs/screenshot/previsione-di-cassa.png) **Previsione di cassa** | ![Saldo in banca](docs/screenshot/saldo-in-banca.png) **Saldo in banca** e saldo contabile |
+
+Volete vederlo dal vivo? Scriveteci (contatti in fondo).
+
 ## Tre ingredienti, niente magia
 
 1. **Un ERP open source.** Abbiamo usato Odoo 19 Community Edition, ma il concetto vale anche per altri gestionali open source.
