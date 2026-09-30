@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pausa.milano, profilo social (demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --leaf: #1E4D3A;
+    --saffron: #F2A900;
+    --ink: #18241D;
+    --sage: #EEF3EC;
+    --white: #FFFFFF;
+    --muted: #5A6A60;
+    --line: #E1E7E2;
+    --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+    --body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #DDE5DF; font-family: var(--body); color: var(--ink); font-size: 15px; line-height: 1.4; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--saffron); outline-offset: 2px; }
+
+  .phone { max-width: 430px; margin: 0 auto; min-height: 100vh; background: var(--white); }
+  @media (min-width: 600px) {
+    body { padding: 2rem 0; }
+    .phone { min-height: 0; border-radius: 28px; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(24, 36, 29, 0.5); }
+  }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1rem; border-bottom: 1px solid var(--line); }
+  .topbar strong { font-weight: 700; font-size: 1.05rem; }
+  .topbar svg { width: 22px; height: 22px; }
+
+  .profile { padding: 1rem 1rem 0.75rem; }
+  .head { display: flex; align-items: center; gap: 1.25rem; }
+  .avatar { width: 84px; height: 84px; border-radius: 50%; flex: none; background: var(--saffron); display: grid; place-items: center; border: 3px solid var(--white); box-shadow: 0 0 0 2px var(--leaf); }
+  .avatar span { font-family: var(--display); font-weight: 800; font-size: 1.5rem; color: var(--leaf); letter-spacing: -0.03em; }
+  .avatar span i { color: var(--white); font-style: normal; }
+  .stats { display: flex; flex: 1; justify-content: space-around; text-align: center; }
+  .stats b { display: block; font-size: 1.05rem; }
+  .stats small { color: var(--muted); font-size: 0.85rem; }
+
+  .bio { margin-top: 0.8rem; }
+  .bio .name { font-weight: 700; }
+  .bio .cat { color: var(--muted); }
+  .bio p { margin: 0.15rem 0; }
+  .bio a.link { color: #1D5A8C; font-weight: 600; text-decoration: none; }
+  .bio a.link:hover { text-decoration: underline; }
+
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.9rem; }
+  .actions a { text-align: center; padding: 0.55rem; border-radius: 9px; font-weight: 600; font-size: 0.92rem; text-decoration: none; background: var(--sage); }
+  .actions a.primary { background: var(--leaf); color: var(--white); }
+
+  .highlights { display: flex; gap: 0.9rem; overflow-x: auto; padding: 1rem 1rem 0.9rem; scrollbar-width: none; }
+  .hl { text-align: center; flex: none; width: 64px; font-size: 0.78rem; }
+  .hl .ring { width: 62px; height: 62px; border-radius: 50%; border: 1px solid #C9D6CB; padding: 3px; margin-bottom: 0.3rem; }
+  .hl .ring div { width: 100%; height: 100%; border-radius: 50%; display: grid; place-items: center; font-size: 1.4rem; background: var(--sage); }
+
+  .tabs { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+  .tabs span { text-align: center; padding: 0.6rem; font-size: 0.85rem; font-weight: 600; color: var(--muted); }
+  .tabs span.on { color: var(--ink); border-top: 2px solid var(--ink); margin-top: -1px; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .post { aspect-ratio: 1 / 1; position: relative; overflow: hidden; padding: 9px; display: flex; flex-direction: column; justify-content: space-between; }
+  .post h3 { font-family: var(--display); font-weight: 800; margin: 0; line-height: 1.02; letter-spacing: -0.02em; }
+  .post p { margin: 0; font-size: 0.66rem; line-height: 1.25; }
+  .post svg { position: absolute; }
+
+  .p-menu { background: var(--saffron); }
+  .p-menu h3 { font-size: 0.95rem; }
+  .p-menu ul { list-style: none; margin: 0; padding: 0; font-size: 0.6rem; font-weight: 600; }
+  .p-menu li { display: flex; justify-content: space-between; border-bottom: 1px dotted rgba(24,36,29,.45); padding: 1px 0; }
+
+  .p-rice { background: var(--leaf); color: var(--white); }
+  .p-rice h3 { font-size: 0.95rem; position: relative; z-index: 1; }
+  .p-rice svg { right: -6px; bottom: -6px; width: 72%; }
+
+  .p-quote { background: var(--sage); }
+  .p-quote h3 { font-size: 0.78rem; font-weight: 600; font-family: var(--body); letter-spacing: 0; line-height: 1.25; }
+
+  .p-kitchen { background: #F6E3B0; }
+  .p-kitchen h3 { font-size: 1.05rem; color: var(--leaf); position: relative; z-index: 1; }
+  .p-kitchen svg { left: 50%; bottom: 8px; width: 58%; transform: translateX(-50%); }
+
+  .p-trial { background: var(--ink); color: var(--white); }
+  .p-trial h3 { font-size: 1.05rem; color: var(--saffron); }
+
+  .p-cheese { background: #FFF6DA; }
+  .p-cheese h3 { font-size: 0.9rem; color: var(--leaf); position: relative; z-index: 1; }
+  .p-cheese svg { right: 8px; bottom: 10px; width: 55%; }
+
+  .p-bike { background: var(--saffron); }
+  .p-bike h3 { font-size: 0.9rem; position: relative; z-index: 1; }
+  .p-bike svg { left: 50%; bottom: 6px; width: 78%; transform: translateX(-50%); }
+
+  .p-pumpkin { background: var(--leaf); color: var(--white); }
+  .p-pumpkin h3 { font-size: 0.95rem; position: relative; z-index: 1; }
+  .p-pumpkin svg { right: 6px; bottom: 6px; width: 50%; }
+
+  .p-team { background: var(--sage); }
+  .p-team h3 { font-size: 0.9rem; color: var(--leaf); }
+  .p-team .faces { display: flex; gap: 6px; }
+  .p-team .faces span { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 0.8rem; color: var(--white); }
+
+  .demo-note { text-align: center; font-size: 0.78rem; color: var(--muted); padding: 1rem 1.25rem 1.5rem; margin: 0; }
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="topbar">
+    <strong>pausa.milano</strong>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>
+  </div>
+
+  <section class="profile">
+    <div class="head">
+      <div class="avatar" aria-hidden="true"><span>P<i>.</i></span></div>
+      <div class="stats">
+        <div><b>214</b><small>post</small></div>
+        <div><b>3.180</b><small>follower</small></div>
+        <div><b>412</b><small>seguiti</small></div>
+      </div>
+    </div>
+    <div class="bio">
+      <p class="name">Pausa, pranzi per uffici</p>
+      <p class="cat">Servizio di catering</p>
+      <p>Pranzi freschi consegnati in ufficio, a Milano 🍚</p>
+      <p>Cuciniamo all'Isola con prodotti lombardi di stagione</p>
+      <p>Ordini entro le 10, consegna alle 12:30 in e‑bike 🚲</p>
+      <p><a class="link" href="/pausa?utm_source=instagram">mdw.digitalforce.it/pausa</a></p>
+    </div>
+    <div class="actions">
+      <a class="primary" href="/pausa?utm_source=instagram">Prova gratuita</a>
+      <a href="/pausa?utm_source=instagram#prova">Contattaci</a>
+    </div>
+  </section>
+
+  <div class="highlights">
+    <div class="hl"><div class="ring"><div>🍚</div></div>Menu</div>
+    <div class="hl"><div class="ring"><div>👩‍🍳</div></div>Cucina</div>
+    <div class="hl"><div class="ring"><div>🌾</div></div>Fornitori</div>
+    <div class="hl"><div class="ring"><div>🏢</div></div>Uffici</div>
+    <div class="hl"><div class="ring"><div>⭐</div></div>Recensioni</div>
+  </div>
+
+  <div class="tabs"><span class="on">Post</span><span>Reel</span></div>
+
+  <div class="grid">
+    <div class="post p-menu">
+      <h3>Il menu di giovedì</h3>
+      <ul>
+        <li><span>Risotto allo zafferano</span><span>11</span></li>
+        <li><span>Farro, zucca, taleggio</span><span>10</span></li>
+        <li><span>Vitello tonnato</span><span>12</span></li>
+      </ul>
+    </div>
+
+    <div class="post p-rice">
+      <h3>Carnaroli della Lomellina</h3>
+      <svg viewBox="0 0 100 80" aria-hidden="true">
+        <g fill="#F2A900">
+          <ellipse cx="30" cy="50" rx="9" ry="4" transform="rotate(-30 30 50)"/>
+          <ellipse cx="52" cy="40" rx="9" ry="4" transform="rotate(20 52 40)"/>
+          <ellipse cx="72" cy="58" rx="9" ry="4" transform="rotate(-10 72 58)"/>
+          <ellipse cx="45" cy="64" rx="9" ry="4" transform="rotate(40 45 64)"/>
+          <ellipse cx="80" cy="34" rx="9" ry="4" transform="rotate(-45 80 34)"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="post p-quote">
+      <h3>"Da quando c'è Pausa, a pranzo si parla d'altro."</h3>
+      <p>Studio legale, Porta Venezia</p>
+    </div>
+
+    <div class="post p-kitchen">
+      <h3>Ore 11. In cucina all'Isola</h3>
+      <svg viewBox="0 0 100 60" aria-hidden="true">
+        <path d="M8 22 H92 V40 Q92 56 76 56 H24 Q8 56 8 40 Z" fill="#1E4D3A"/>
+        <rect x="2" y="18" width="96" height="6" rx="3" fill="#18241D"/>
+        <path d="M30 12 q4 -6 0 -12 M50 12 q4 -6 0 -12 M70 12 q4 -6 0 -12" stroke="#1E4D3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="post p-trial">
+      <h3>5 pranzi offerti al vostro team</h3>
+      <p>Link in bio per la settimana di prova</p>
+    </div>
+
+    <div class="post p-cheese">
+      <h3>Taleggio e bitto dalla Valtellina</h3>
+      <svg viewBox="0 0 100 70" aria-hidden="true">
+        <path d="M10 60 L90 60 L90 30 L10 44 Z" fill="#F2A900"/>
+        <path d="M10 44 L90 30 L70 22 Z" fill="#F6CB5A"/>
+        <circle cx="35" cy="52" r="4" fill="#FFF6DA"/><circle cx="62" cy="46" r="5" fill="#FFF6DA"/><circle cx="78" cy="53" r="3" fill="#FFF6DA"/>
+      </svg>
+    </div>
+
+    <div class="post p-bike">
+      <h3>Consegna alle 12:30, in e‑bike</h3>
+      <svg viewBox="0 0 120 60" aria-hidden="true" fill="none" stroke="#18241D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="26" cy="40" r="16"/><circle cx="94" cy="40" r="16"/>
+        <path d="M26 40 L50 16 L78 16 L94 40 M50 16 L62 40 L26 40 M62 40 L78 16"/>
+        <rect x="40" y="2" width="26" height="12" rx="2" fill="#1E4D3A" stroke="none"/>
+      </svg>
+    </div>
+
+    <div class="post p-pumpkin">
+      <h3>Zucca mantovana: è stagione</h3>
+      <svg viewBox="0 0 80 70" aria-hidden="true">
+        <ellipse cx="40" cy="42" rx="34" ry="24" fill="#F2A900"/>
+        <path d="M40 18 V42 M22 22 Q30 42 22 62 M58 22 Q50 42 58 62" stroke="#D18E00" stroke-width="3" fill="none"/>
+        <rect x="36" y="6" width="8" height="14" rx="3" fill="#EEF3EC"/>
+      </svg>
+    </div>
+
+    <div class="post p-team">
+      <h3>Giulia e Luca, da Bergamo e Lodi</h3>
+      <div class="faces"><span style="background:#1E4D3A">GB</span><span style="background:#F2A900;color:#18241D">LF</span></div>
+    </div>
+  </div>
+
+  <p class="demo-note">Profilo dimostrativo di un'azienda di fantasia, creato per Milano Digital Week 2026.</p>
+</div>
+</body>
+</html>

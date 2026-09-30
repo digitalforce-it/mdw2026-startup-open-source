@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pausa · Pranzi per uffici a Milano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --leaf: #1E4D3A;
+    --saffron: #F2A900;
+    --ink: #18241D;
+    --sage: #EEF3EC;
+    --white: #FFFFFF;
+    --error: #B3261E;
+    --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+    --body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--white); color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.55; }
+  a { color: var(--leaf); }
+  :focus-visible { outline: 3px solid var(--saffron); outline-offset: 3px; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem; }
+
+  header { padding: 1.25rem 0; }
+  header .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+  .logo { font-family: var(--display); font-weight: 800; font-size: 1.75rem; color: var(--leaf); letter-spacing: -0.02em; text-decoration: none; }
+  .logo span { color: var(--saffron); }
+  .where { color: #4A5A50; font-size: 0.95rem; }
+
+  .hero { padding: 2.5rem 0 4rem; }
+  .hero .wrap { display: grid; gap: 3rem; align-items: center; }
+  h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2.4rem, 7vw, 4.4rem); line-height: 1.02; letter-spacing: -0.035em; margin: 0 0 1.25rem; color: var(--leaf); max-width: 13ch; }
+  .lead-text { font-size: 1.2rem; max-width: 34rem; margin: 0 0 2rem; color: #33443A; }
+  .btn { display: inline-block; background: var(--leaf); color: var(--white); font-family: var(--body); font-weight: 600; font-size: 1.05rem; padding: 0.95rem 1.5rem; border-radius: 999px; border: 0; cursor: pointer; text-decoration: none; }
+  .btn:hover { background: #163A2C; }
+
+  .menu { background: var(--saffron); color: var(--ink); border-radius: 6px; padding: 1.75rem 1.75rem 1.5rem; max-width: 26rem; justify-self: center; width: 100%; transform: rotate(-2deg); box-shadow: 0 18px 40px -18px rgba(30, 77, 58, 0.55); }
+  .menu h2 { font-family: var(--display); font-weight: 800; font-size: 1.35rem; margin: 0 0 1.1rem; letter-spacing: -0.01em; }
+  .menu ul { list-style: none; margin: 0; padding: 0; }
+  .menu li { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.45rem 0; font-weight: 500; }
+  .menu li::after { content: none; }
+  .menu .dots { flex: 1; border-bottom: 2px dotted rgba(24, 36, 29, 0.45); transform: translateY(-4px); }
+  .menu .price { font-family: var(--display); font-weight: 600; }
+  .menu p { margin: 1.1rem 0 0; font-size: 0.95rem; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .menu { animation: drop 0.7s cubic-bezier(.2,.8,.2,1) both 0.15s; }
+    @keyframes drop { from { opacity: 0; transform: translateY(-24px) rotate(-6deg); } to { opacity: 1; transform: rotate(-2deg); } }
+  }
+
+  .how { background: var(--sage); padding: 4rem 0; }
+  .how h2, .trial h2 { font-family: var(--display); font-weight: 800; font-size: clamp(1.8rem, 4.5vw, 2.6rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 2rem; color: var(--leaf); }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; counter-reset: step; }
+  .steps li { counter-increment: step; padding-left: 3.25rem; position: relative; }
+  .steps li::before { content: counter(step); position: absolute; left: 0; top: -0.1rem; width: 2.3rem; height: 2.3rem; border-radius: 50%; background: var(--leaf); color: var(--white); font-family: var(--display); font-weight: 800; display: grid; place-items: center; }
+  .steps strong { display: block; font-size: 1.15rem; margin-bottom: 0.2rem; }
+  .steps span { color: #33443A; }
+
+  .trial { padding: 4rem 0 5rem; }
+  .trial .wrap { display: grid; gap: 2.5rem; }
+  .trial .intro p { font-size: 1.15rem; max-width: 30rem; color: #33443A; margin: 0; }
+  form { display: grid; gap: 1.1rem; max-width: 36rem; }
+  .row { display: grid; gap: 1.1rem; }
+  label { display: grid; gap: 0.35rem; font-weight: 600; font-size: 0.98rem; }
+  label small { font-weight: 400; color: #5A6A60; }
+  input, select, textarea { font: inherit; font-weight: 400; color: var(--ink); background: var(--white); border: 2px solid #C9D6CB; border-radius: 10px; padding: 0.8rem 0.9rem; width: 100%; }
+  input:focus, select:focus, textarea:focus { border-color: var(--leaf); outline: none; box-shadow: 0 0 0 3px rgba(242, 169, 0, 0.45); }
+  textarea { min-height: 6.5rem; resize: vertical; }
+  .trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .notice { border-radius: 10px; padding: 1rem 1.1rem; font-weight: 500; max-width: 36rem; }
+  .notice.ok { background: var(--sage); border-left: 6px solid var(--leaf); }
+  .notice.ko { background: #FBEAE8; border-left: 6px solid var(--error); color: var(--error); }
+  [hidden] { display: none !important; }
+
+  .about { padding: 4rem 0 0; }
+  .about .wrap { display: grid; gap: 1.5rem; }
+  .about h2 { font-family: var(--display); font-weight: 800; font-size: clamp(1.8rem, 4.5vw, 2.6rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0; color: var(--leaf); }
+  .about p { margin: 0; max-width: 40rem; font-size: 1.1rem; color: #33443A; }
+  .about ul { margin: 0; padding-left: 1.2rem; color: #33443A; }
+  .about li { margin: 0.25rem 0; }
+  @media (min-width: 860px) { .about .wrap { grid-template-columns: 1fr 1.2fr; align-items: start; } }
+
+  footer { border-top: 1px solid #DCE5DD; padding: 1.75rem 0 2.5rem; color: #4A5A50; font-size: 0.92rem; }
+  footer p { max-width: 46rem; margin: 0; }
+
+  @media (min-width: 860px) {
+    .hero { padding: 3.5rem 0 5.5rem; }
+    .hero .wrap { grid-template-columns: 1.25fr 1fr; }
+    .steps { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .trial .wrap { grid-template-columns: 1fr 1.2fr; align-items: start; }
+    .row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="/pausa">Pausa<span>.</span></a>
+    <span class="where">Pranzi per uffici a Milano</span>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Il pranzo arriva in ufficio. La pausa resta vostra.</h1>
+        <p class="lead-text">Cuciniamo ogni mattina all'Isola con prodotti lombardi di stagione e consegniamo alle 12:30. Il team ordina insieme entro le 10, senza app da installare.</p>
+        <a class="btn" href="#prova">Provate Pausa per una settimana</a>
+      </div>
+      <aside class="menu" aria-label="Menu del giorno">
+        <h2>Il menu di giovedì 1 ottobre</h2>
+        <ul>
+          <li>Risotto allo zafferano <span class="dots"></span> <span class="price">11 €</span></li>
+          <li>Farro, zucca e taleggio <span class="dots"></span> <span class="price">10 €</span></li>
+          <li>Vitello tonnato leggero <span class="dots"></span> <span class="price">12 €</span></li>
+          <li>Torta di mele valtellinese <span class="dots"></span> <span class="price">4 €</span></li>
+        </ul>
+        <p>Ordini entro le 10:00, consegna alle 12:30.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="wrap">
+      <h2>Come funziona</h2>
+      <ol class="steps">
+        <li><strong>Entro le 10 ordinate</strong><span>Un link condiviso con il team: ognuno sceglie il suo piatto dal menu del giorno.</span></li>
+        <li><strong>Alle 11 cuciniamo</strong><span>Tutto fresco, nella nostra cucina all'Isola. Niente piatti preparati il giorno prima.</span></li>
+        <li><strong>Alle 12:30 consegniamo</strong><span>In bici elettrica, in contenitori da restituire la consegna successiva.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="wrap">
+      <h2>Chi siamo</h2>
+      <div>
+        <p>Pausa è nata nel 2024 da Giulia Brambilla, bergamasca, ex consulente stanca dei pranzi davanti allo schermo, e Luca Ferrario, cuoco di Lodi con dieci anni di cucine milanesi alle spalle. Oggi siamo in quattro, nella nostra cucina all'Isola.</p>
+        <ul>
+          <li>Riso Carnaroli dalla Lomellina</li>
+          <li>Formaggi dalla Valtellina</li>
+          <li>Verdure dalle cascine del Parco Agricolo Sud</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="trial" id="prova">
+    <div class="wrap">
+      <div class="intro">
+        <h2>Provate Pausa per una settimana</h2>
+        <p>Cinque pranzi offerti al vostro team, per capire se fa per voi. Vi scriviamo entro un giorno lavorativo per organizzare la prova.</p>
+      </div>
+      <div>
+        <p class="notice ok" id="ok" role="status" hidden>Richiesta ricevuta. Vi scriviamo entro un giorno lavorativo per organizzare la settimana di prova.</p>
+        <p class="notice ko" id="ko" role="alert" hidden>Mancano il nome o un'email valida: senza, non possiamo ricontattarvi.</p>
+        <form id="form" action="/pausa/richiesta" method="post">
+          <div class="row">
+            <label>Nome e cognome<input name="contact_name" required autocomplete="name"></label>
+            <label>Email di lavoro<input name="email" type="email" required autocomplete="email"></label>
+          </div>
+          <div class="row">
+            <label><span>Azienda <small>(facoltativo)</small></span><input name="company" autocomplete="organization"></label>
+            <label><span>Telefono <small>(facoltativo)</small></span><input name="phone" type="tel" autocomplete="tel"></label>
+          </div>
+          <label>Quanti siete in ufficio?
+            <select name="team_size">
+              <option>Fino a 10</option>
+              <option>Da 11 a 30</option>
+              <option>Da 31 a 100</option>
+              <option>Più di 100</option>
+            </select>
+          </label>
+          <label><span>Esigenze particolari <small>(facoltativo)</small></span><textarea name="notes" placeholder="Vegetariani, allergie, orari di consegna..."></textarea></label>
+          <input type="hidden" name="utm_source" id="utm_source">
+          <label class="trap" aria-hidden="true">Non compilare<input name="website_url" tabindex="-1" autocomplete="off"></label>
+          <div><button class="btn" type="submit">Richiedi la settimana di prova</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Pausa è un'azienda di fantasia: questa pagina è una demo creata per Milano Digital Week 2026. I dati inviati finiscono nel CRM dimostrativo di DigitalForce e vengono cancellati dopo l'evento.</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var source = params.get("utm_source");
+    if (source) document.getElementById("utm_source").value = source;
+    if (params.get("grazie")) {
+      document.getElementById("ok").hidden = false;
+      document.getElementById("form").hidden = true;
+    }
+    if (params.get("errore")) document.getElementById("ko").hidden = false;
+  })();
+</script>
+</body>
+</html>
