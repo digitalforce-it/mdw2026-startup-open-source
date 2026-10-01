@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mdw_cash_flow_graph" model="ir.ui.view">
+        <field name="name">mdw.cash.flow.graph</field>
+        <field name="model">mdw.cash.flow</field>
+        <field name="arch" type="xml">
+            <graph string="Saldo previsto" type="line" cumulated="1" sample="0">
+                <field name="date" interval="month"/>
+                <field name="amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_mdw_cash_flow_pivot" model="ir.ui.view">
+        <field name="name">mdw.cash.flow.pivot</field>
+        <field name="model">mdw.cash.flow</field>
+        <field name="arch" type="xml">
+            <pivot string="Entrate e uscite" sample="0">
+                <field name="date" interval="month" type="row"/>
+                <field name="source" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_mdw_cash_flow_list" model="ir.ui.view">
+        <field name="name">mdw.cash.flow.list</field>
+        <field name="model">mdw.cash.flow</field>
+        <field name="arch" type="xml">
+            <list string="Movimenti previsti" create="0" edit="0" delete="0">
+                <field name="date"/>
+                <field name="source"/>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="due_date" optional="show"/>
+                <field name="late" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="amount" sum="Totale"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mdw_cash_flow_search" model="ir.ui.view">
+        <field name="name">mdw.cash.flow.search</field>
+        <field name="model">mdw.cash.flow</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <filter name="base" string="Saldo e fatture" domain="[('source', 'in', ('saldo', 'cliente', 'fornitore'))]"/>
+                <filter name="orders" string="Ordini confermati" domain="[('source', '=', 'ordine')]"/>
+                <filter name="quotes" string="Preventivi (ponderati)" domain="[('source', '=', 'preventivo')]"/>
+                <separator/>
+                <filter name="on_time" string="Senza ritardi" domain="[('late', '=', False)]"/>
+                <filter name="only_late" string="Solo in ritardo" domain="[('late', '=', True)]"/>
+                <group>
+                    <filter name="by_source" string="Tipo" context="{'group_by': 'source'}"/>
+                    <filter name="by_month" string="Mese" context="{'group_by': 'date:month'}"/>
+                    <filter name="by_partner" string="Contatto" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mdw_cash_flow" model="ir.actions.act_window">
+        <field name="name">Previsione di cassa</field>
+        <field name="res_model">mdw.cash.flow</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="context">{'search_default_base': 1, 'search_default_on_time': 1}</field>
+    </record>
+
+    <record id="view_company_mdw_cash_form" model="ir.ui.view">
+        <field name="name">res.company.mdw.cash.form</field>
+        <field name="model">res.company</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form string="Saldo in banca" create="0" delete="0">
+                <sheet>
+                    <group>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="mdw_cash_start"/>
+                        <field name="mdw_cash_books"/>
+                    </group>
+                    <button name="action_mdw_open_forecast" type="object" string="Apri la previsione" class="btn-primary"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mdw_cash_start" model="ir.actions.act_window">
+        <field name="name">Saldo in banca</field>
+        <field name="res_model">res.company</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_company_mdw_cash_form"/>
+        <field name="res_id" ref="base.main_company"/>
+    </record>
+
+    <menuitem id="menu_mdw_cash_root" name="Cassa" parent="account.menu_finance" sequence="4"/>
+    <menuitem id="menu_mdw_cash_start" name="Saldo in banca" parent="menu_mdw_cash_root" action="action_mdw_cash_start" sequence="1"/>
+    <menuitem id="menu_mdw_cash_flow" name="Previsione di cassa" parent="menu_mdw_cash_root" action="action_mdw_cash_flow" sequence="2"/>
+</odoo>

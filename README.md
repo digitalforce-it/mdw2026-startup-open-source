@@ -34,9 +34,10 @@ Volete vederlo dal vivo? Scriveteci (contatti in fondo).
 | Cartella | Contenuto |
 |---|---|
 | [`modules/mdw_lead_form`](modules/mdw_lead_form) | Modulo Odoo: landing page e profilo social di "Pausa", una startup di fantasia. Il modulo di contatto crea un lead nel CRM, con la fonte (Instagram, sito, volantino QR). |
+| [`modules/mdw_cash_flow`](modules/mdw_cash_flow) | Modulo Odoo: menu Cassa con il saldo in banca, il saldo contabile e la previsione di cassa (fatture, ordini e preventivi ponderati, con i ritardi di pagamento). Istruzioni in [`docs/cassa.md`](docs/cassa.md). |
 | [`scripts/`](scripts) | Script che popolano un database Odoo con dati realistici: fatture con pagamenti e ritardi, una pipeline commerciale, lead in arrivo. |
 | [`data/`](data) | Le 20 aziende e i contatti dimostrativi usati negli script (tutti di fantasia). |
-| [`docs/`](docs) | Istruzioni passo passo: installazione, solleciti automatici, filtri salvati, pagina Pausa. |
+| [`docs/`](docs) | Istruzioni passo passo: installazione, solleciti automatici, filtri salvati, pagina Pausa, cassa. |
 | [`prompts/`](prompts) | I prompt usati per costruire le app con l'AI. |
 | [`slides/`](slides) | Le slide della sessione in PDF. |
 
@@ -44,7 +45,7 @@ Volete vederlo dal vivo? Scriveteci (contatti in fondo).
 
 1. Installate **Odoo 19 Community** ([documentazione ufficiale](https://www.odoo.com/documentation/19.0/administration/on_premise.html)) e create un database.
 2. **Prima di installare Fatturazione**, impostate il paese dell'azienda su **Italia**, così Odoo carica il piano dei conti italiano con le aliquote IVA. Controllate in Fatturazione > Configurazione > Impostazioni > Localizzazione fiscale.
-3. Installate **Fatturazione**, **CRM** e **Vendite**.
+3. Installate **Fatturazione**, **CRM** e **Vendite**. Per la previsione di cassa copiate anche `modules/mdw_cash_flow` e attivatelo ([`docs/cassa.md`](docs/cassa.md)).
 4. Importate i contatti da `data/mdw_contatti_demo_milano.xlsx` (Contatti > Importa).
 5. Lanciate gli script in `scripts/`, sempre prima con `--dry-run`. Istruzioni in [`docs/installazione.md`](docs/installazione.md).
 6. Configurate i solleciti automatici e i filtri: [`docs/solleciti.md`](docs/solleciti.md) e [`docs/filtri.md`](docs/filtri.md).
